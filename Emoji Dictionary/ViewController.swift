@@ -13,13 +13,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //tableview connection
     @IBOutlet weak var emojiDictTableView: UITableView!
     
-    var emojis = ["🐶","💩","💀","🙈","🙉","🙊"]
+    //declare emoji array
+    var emojis : [Emoji] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         emojiDictTableView.dataSource = self
         emojiDictTableView.delegate = self
+        //run emoji function and save into declared emojis array
+        emojis = makeEmojiArray()
     }
     
     // tells tableview how many rows to popuate
@@ -42,14 +45,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // sends, sender information to DefinitionViewController
         let defVC = segue.destination as! DefinitionViewController
-        defVC.emoji = sender as! String
+        defVC.passedEmoji = sender as! Emoji
     }
     
     // tells table what information to show in each row - indexPath.row asks what info is gonna be in that row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // save UItablecell object into cell var and save item in array into cell
         let cell = UITableViewCell()
-        cell.textLabel?.text = emojis[indexPath.row]
+        // save emoji object to emoji var, get symbol from object and place in cell
+        let emoji = emojis[indexPath.row]
+        cell.textLabel?.text = emoji.emojiSymbol
         return cell
     }
 
@@ -58,6 +63,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
 
+    //creates emoji array
+    func makeEmojiArray() -> [Emoji] {
+        //create emoji objects using emoji init()
+        let emoji1 = Emoji(emojiSymbol: "🐶", definition: "PUPPY", category: "Animals", birthYear: 2009)
+        let emoji2 = Emoji(emojiSymbol: "💩", definition: "HAHA POOP", category: "Smiley", birthYear: 2011)
+        let emoji3 = Emoji(emojiSymbol: "💀", definition: "DEATH", category: "Smiley", birthYear: 2011)
+        let emoji4 = Emoji(emojiSymbol: "🙈", definition: "MONKEY SEE", category: "Animals", birthYear: 2010)
+        let emoji5 = Emoji(emojiSymbol: "🙉", definition: "MONKEY HEAR", category: "Animals", birthYear: 2010)
+        let emoji6 = Emoji(emojiSymbol: "🙊", definition: "MONKEY SPEAK", category: "Animals", birthYear: 2010)
+  
+        //suggested let
+        let emojis = [emoji1, emoji2, emoji3, emoji4, emoji5, emoji6]
+        
+        return emojis
+    }
 
 }
 
