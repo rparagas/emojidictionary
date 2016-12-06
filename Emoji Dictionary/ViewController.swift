@@ -25,6 +25,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return emojis.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "selectSegue", sender: "💩")
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = emojis[indexPath.row]
