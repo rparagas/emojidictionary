@@ -29,6 +29,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // when cell/row is selected, perform segue
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // unhighlight selected row
+        tableView.deselectRow(at: indexPath, animated:true)
         //saves selected row to next view controller
         let emoji = emojis[indexPath.row]
         // performs segue to next viewcontroller
