@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    //tableview connection
     @IBOutlet weak var emojiDictTableView: UITableView!
     
     var emojis = ["🐶","💩","💀","🙈","🙉","🙊"]
@@ -21,15 +22,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         emojiDictTableView.delegate = self
     }
     
+    // tells tableview how many rows to popuate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return emojis.count
     }
     
+    // when cell/row is selected, perform segue
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "selectSegue", sender: "💩")
+        //saves selected row to next view controller
+        let emoji = emojis[indexPath.row]
+        // performs segue to next viewcontroller
+        performSegue(withIdentifier: "selectSegue", sender: emoji)
     }
     
+    // gets run when your about to perform segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // sends, sender information to DefinitionViewController
+        let defVC = segue.destination as! DefinitionViewController
+        defVC.emoji = sender as! String
+    }
+    
+    // tells table what information to show in each row - indexPath.row asks what info is gonna be in that row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // save UItablecell object into cell var and save item in array into cell
         let cell = UITableViewCell()
         cell.textLabel?.text = emojis[indexPath.row]
         return cell
